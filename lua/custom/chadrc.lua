@@ -12,9 +12,11 @@ M.ui = {
   telescope = { style = "bordered" },
   hl_override = {
     Cursor = { bg = "pink" }, -- works
-    LspReferenceText = { fg = "#ff86d3", bg = "#f1f2f8" }, -- on cursor over text
+    LspReferenceText = { fg = "#ff86d3", bg = "#f1f2f8" }, -- works
     LspReferenceRead = { fg = "green", bg = "purple" },
     LspReferenceWrite = { fg = "green", bg = "lightblue" },
+    FloatBorder = { fg = "green" }, -- works
+    NormalFloat = { fg = "green" }, -- works
   },
   hl_add = {
     FloatBorder = { fg = "green" }, -- works

@@ -21,3 +21,13 @@ vim.cmd [[
     autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
   augroup END
 ]]
+
+-- use vim.filetype.add to add the .wit extension as a filetype
+vim.filetype.add {
+  extension = {
+    wit = "wit",
+  },
+}
+
+-- cannot get the WIT parser to work, use TS as a close approximation for any files ending in .wit
+vim.treesitter.language.register("typescript", "wit")

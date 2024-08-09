@@ -31,6 +31,7 @@ local checkOnSave = function()
     allFeatures = true,
     command = "clippy",
     extraArgs = { "--no-deps" },
+    target = "wasm32-unknown-unknown",
   }
   -- if is_wit_project also add overrideCommand
   if is_wit_project() then
@@ -136,6 +137,10 @@ rt.setup {
             "doctest",
             "wasm32",
             'target_arch = "wasm32"',
+          },
+          target = {
+            "wasm32-unknown-unknown",
+            "wasi-wasm32",
           },
         },
         -- if `is_wit_project` true, then also add

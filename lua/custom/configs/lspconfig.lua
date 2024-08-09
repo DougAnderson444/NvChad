@@ -5,7 +5,7 @@ local capabilities = configs.capabilities
 local lspconfig = require "lspconfig"
 
 -- rust-tools takes car of rust_analyzer for us, so we don't install it here (or it causes conflicts)
-local servers = { "html", "dotls", "pest_ls", "yamlls" } -- add any server installed with Mason or system-wide
+local servers = { "html", "dotls", "yamlls" } -- add any server installed with Mason or system-wide
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -14,6 +14,24 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- add servers[rust_analyzer] = {}
+-- lspconfig.rust_analyzer = {}
+lspconfig.taplo = {
+  keys = {
+    {
+      "K",
+      function()
+        if vim.fn.expand "%:t" == "Cargo.toml" and require("crates").popup_available() then
+          require("crates").show_popup()
+        else
+          vim.lsp.buf.hover()
+        end
+      end,
+      desc = "Show Crate Documentation",
+    },
+  },
+}
+
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
@@ -21,6 +39,18 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
   border = "rounded",
 })
+
+-- vim.lsp.inlay_hint.enable(true)
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+--   callback = function(args)
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--     if client and client.server_capabilities.inlayHintProvider then
+--       vim.lsp.inlay_hint.enable(true)
+--     end
+--     -- whatever other lsp config you want
+--   end,
+-- })
 
 -- Without the loop, you would have to manually set up each LSP
 lspconfig.tailwindcss.setup {

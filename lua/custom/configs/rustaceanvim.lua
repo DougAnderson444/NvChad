@@ -50,7 +50,7 @@ vim.g.rustaceanvim = {
                 augroup END
               ]]
       -- format on save. https://www.jvt.me/posts/2022/03/01/neovim-format-on-save/
-      vim.cmd [[autocmd BufWritePre *.rs lua vim.lsp.buf.format()]]
+      -- vim.cmd [[autocmd BufWritePre *.rs lua vim.lsp.buf.format()]]
     end,
   },
   server = {
@@ -78,17 +78,17 @@ vim.g.rustaceanvim = {
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
       end, { desc = "Inlay hints Toggle" })
 
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = "rounded",
-      })
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --   border = "rounded",
+      -- })
 
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = "rounded",
-      })
+      -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      --   border = "rounded",
+      -- })
 
-      vim.lsp.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.buf.code_action, {
-        border = "rounded",
-      })
+      -- vim.lsp.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.buf.code_action, {
+      --   border = "rounded",
+      -- })
 
       -- https://rust-analyzer.github.io/manual.html#semantic-syntax-highlighting
       -- whether to higlight semantics or not, see https://neovim.io/doc/user/lsp.html#vim.lsp.semantic_tokens.start%28%29

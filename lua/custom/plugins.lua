@@ -19,7 +19,6 @@ local plugins = {
         "codelldb",
         "tailwindcss-language-server",
         "dot-language-server",
-        "pest-language-server",
         "yaml-language-server",
       },
     },
@@ -38,12 +37,22 @@ local plugins = {
       require "custom.configs.lspconfig"
     end,
   },
-  { -- rust tools
-    "simrat39/rust-tools.nvim",
-    ft = "rust", -- so Lazyvim knows when to load it
-    after = "nvim-lspconfig",
+  -- { -- rust tools
+  --   "simrat39/rust-tools.nvim",
+  --   ft = "rust", -- so Lazyvim knows when to load it
+  --   after = "nvim-lspconfig",
+  --   config = function()
+  --     require "custom.configs.rust_tools"
+  --   end,
+  -- },
+  {
+    "mrcjkb/rustaceanvim",
+    -- after = "nvim-lspconfig",
+    version = "^4", -- Recommended
+    -- lazy = false, -- This plugin is already lazy
+    ft = { "rust" },
     config = function()
-      require "custom.configs.rust_tools"
+      require "custom.configs.rustaceanvim"
     end,
   },
   { -- text syntax highlighting per language
@@ -69,7 +78,7 @@ local plugins = {
         "markdown",
 
         -- custom parser
-        -- "wit",
+        "wit",
       },
       highlight = {
         enable = true,
@@ -79,19 +88,6 @@ local plugins = {
     -- from https://github.com/NvChad/NvChad/discussions/2426
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
-      -- install a wit parser for wit files. This is a local parser
-      -- does not seem to work:
-      -- require("nvim-treesitter.parsers").get_parser_configs().wit = {
-      --   install_info = {
-      --     url = "~/code/clones/tree-sitter-wit", -- local path or git repo
-      --     files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-      --     -- optional entries:
-      --     -- branch = "main", -- default branch in case of git repo if different from master
-      --     -- generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-      --     requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-      --   },
-      --   -- filetype = "wit", -- if filetype does not match the parser name
-      -- }
       require("nvim-treesitter.parsers").get_parser_configs().just = {
         install_info = {
           url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
@@ -109,7 +105,13 @@ local plugins = {
     cmd = "Trouble",
     config = function()
       dofile(vim.g.base46_cache .. "trouble") -- theme using chadrd.ui.extended_integrations in custom/chadrc.lua
-      require("trouble").setup()
+      require("trouble").setup {
+        modes = {
+          diagnostics = { auto_open = true },
+        },
+        auto_close = true,
+        open_no_results = true,
+      }
     end,
   },
   { -- AI tooling
@@ -174,10 +176,10 @@ local plugins = {
     end,
   },
   -- pest syntax highlighting
-  {
-    "pest-parser/pest.vim",
-    ft = "pest",
-  },
+  -- {
+  --   "pest-parser/pest.vim",
+  --   ft = "pest",
+  -- },
   {
     "NoahTheDuke/vim-just",
     ft = { "just" },
